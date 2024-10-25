@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лабораторная работа 1 - Иванов И.И., группа 123</title>
+    <title>Лабораторная работа 9 - Долгов Д.А., группа 231-362</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -14,164 +14,182 @@
 
     <main>
     <?php
-        $start_value = -10;  // начальное значение аргумента
-        $encounting = 10000; // количество вычисляемых значений
-        $step = 2;           // шаг изменения аргумента
-        $type = 'D';         // тип верстки ('A', 'B', 'C', 'D', 'E')
+        $start_value = -10;
+        $encounting = 19;
+        $step = 2;
+        $type = 'D';
+        $type_name = "";
 
-        $x = $start_value;   // текущее значение аргумента. равно начальному
+        $x = $start_value;
 
+        // Инициализация переменных для вычислений
+        $max_value = PHP_FLOAT_MIN;
+        $min_value = PHP_FLOAT_MAX;
+        $sum = 0;
+        $count = 0;
 
         switch ($type) {
-            // Простая текстовая верстка (for)
             case 'A':
+                $type_name = "Простая верстка";
                 for ($i = 0; $i < $encounting; $i++) {
                     if ($x <= 10) {
-                        $f = 10 * $x - 5; // Вычисляем функцию для x <= 10
-                    } elseif ($x < 20) {
-                        $f = ($x + 3) * $x * $x; // Вычисляем функцию для 10 < x < 20
-                    } else {
-                        $f = 3 / ($x - 25); // Вычисляем функцию для x >= 20
+                        $f = round(3 * $x * $x + 2, 2);
+                    } elseif ($x < 20 && $x > 10) {
+                        $f = round(5 * $x + 7, 2);
+                    } elseif($x >= 20 && $x !=22) {
+                        $f = round($x / (22 - $x), 2);
+                    }else{
+                        echo 'f(' . $x . ') = ' . $f . '<br>';
+                        $x += $step;   
+                        continue; 
                     }
 
-                    // Пропускаем итерацию, если результат NaN
-                    if (is_nan($f)) {
-                        $x += $step;
-                        continue;
-                    }
+                    
 
-                    // Прерываем цикл, если аргумент больше или равен 30
-                    if ($x >= 30) {
-                        break;
-                    }
+                    
+
+                    // Обновление статистических значений
+                    $max_value = max($max_value, $f);
+                    $min_value = min($min_value, $f);
+                    $sum += $f;
+                    $count++;
 
                     echo 'f(' . $x . ') = ' . $f . '<br>';
                     $x += $step;
                 }
                 break;
 
-            // Маркированный список (while)
             case 'B':
                 echo "<ul>";
-                $x = $start_value;
                 $i = 0;
-                $f = 0;
-
-                while ($i < $encounting && ($f >= -1000 || $f <= 1000 || !$i)) {
+                $type_name = "Маркированный список";
+                while (true) {
                     if ($x <= 10) {
-                        $f = 10 * $x - 5;
-                    } elseif ($x < 20) {
-                        $f = ($x + 3) * $x * $x;
-                    } else {
-                        $f = 3 / ($x - 25);
-                    }
-
-                    // Пропускаем итерацию, если результат NaN
-                    if (is_nan($f)) {
+                        $f = round(3 * $x * $x + 2, 2);
+                    } elseif ($x < 20 && $x > 10) {
+                        $f = round(5 * $x + 7, 2);
+                    } elseif($x >= 20 && $x !=22) {
+                        $f = round($x / (22 - $x), 2);
+                    }else{
+                        echo "<li>f(" . $x . ") = " . $f . "</li>";
+                    
                         $x += $step;
                         continue;
                     }
 
-                    // Прерываем цикл, если аргумент больше или равен 30
+                    
+
                     if ($x >= 30) {
                         break;
                     }
 
+                    $max_value = max($max_value, $f);
+                    $min_value = min($min_value, $f);
+                    $sum += $f;
+                    $count++;
+
                     echo "<li>f(" . $x . ") = " . $f . "</li>";
-                    $i++;
+                    
                     $x += $step;
                 }
                 echo "</ul>";
                 break;
 
-            // Нумерованный список (do-while)
             case 'C':
                 echo "<ol>";
-                $x = $start_value;
                 $i = 0;
-
+                $type_name = "Нумерованный список";
                 do {
                     if ($x <= 10) {
-                        $f = 10 * $x - 5;
-                    } elseif ($x < 20) {
-                        $f = ($x + 3) * $x * $x;
-                    } else {
-                        $f = 3 / ($x - 25);
-                    }
-
-                    // Пропускаем итерацию, если результат NaN
-                    if (is_nan($f)) {
+                        $f = round(3 * $x * $x + 2, 2);
+                    } elseif ($x < 20 && $x > 10) {
+                        $f = round(5 * $x + 7, 2);
+                    } elseif($x >= 20 && $x !=22) {
+                        $f = round($x / (22 - $x), 2);
+                    }else{
+                        echo "<li>f(" . $x . ") = error</li>";
+                    
                         $x += $step;
                         continue;
                     }
 
-                    echo "<li>f(" . $x . ") = " . $f . "</li>";
-                    $i++;
-                    $x += $step;
+                    
 
-                    // Прерываем цикл, если аргумент больше или равен 30
                     if ($x >= 30) {
                         break;
                     }
-                } while ($i < $encounting && ($f >= -1000 || $f <= 1000));
+
+                    $max_value = max($max_value, $f);
+                    $min_value = min($min_value, $f);
+                    $sum += $f;
+                    $count++;
+
+                    echo "<li>f(" . $x . ") = " . $f . "</li>";
+                    
+                    $x += $step;
+                } while (true);
                 echo "</ol>";
                 break;
 
-            // Табличная верстка (for)
             case 'D':
                 echo "<table border='1' style='border-collapse: collapse;'><tr><th>#</th><th>Аргумент</th><th>Значение функции</th></tr>";
-                $x = $start_value;
+                $type_name = "Табличная верстка";
                 for ($i = 0; $i < $encounting; $i++) {
                     if ($x <= 10) {
-                        $f = 10 * $x - 5;
-                    } elseif ($x < 20) {
-                        $f = ($x + 3) * $x * $x;
-                    } else {
-                        $f = 3 / ($x - 25);
+                        $f = round(3 * $x * $x + 2, 2);
+                    } elseif ($x < 20 && $x > 10) {
+                        $f = round(5 * $x + 7, 2);
+                    } elseif($x >= 20 && $x !=22) {
+                        $f = round($x / (22 - $x), 2);
+                    }else{
+                        echo "<tr><td>" . ($i + 1) . "</td><td>" . $x . "</td><td>error</td></tr>";
+                       
+                        
                     }
 
-                    // Пропускаем итерацию, если результат NaN
-                    if (is_nan($f)) {
-                        $x += $step;
-                        continue;
-                    }
+                    
 
-                    // Прерываем цикл, если аргумент больше или равен 30
-                    if ($x >= 30) {
-                        break;
-                    }
+                    
+
+                    $max_value = max($max_value, $f);
+                    $min_value = min($min_value, $f);
+                    $sum += $f;
+                    $count++;
 
                     echo "<tr><td>" . ($i + 1) . "</td><td>" . $x . "</td><td>" . $f . "</td></tr>";
                     $x += $step;
+                    
                 }
                 echo "</table>";
                 break;
 
-            // Блочная верстка (while)
             case 'E':
-                $x = $start_value;
+                $type_name = "Блояная верстка";
                 $i = 0;
-                $f = 0;
-
-                while ($i < $encounting && ($f >= -1000 || $f <= 1000 || !$i)) {
+                while (true) {
                     if ($x <= 10) {
-                        $f = 10 * $x - 5;
-                    } elseif ($x < 20) {
-                        $f = ($x + 3) * $x * $x;
-                    } else {
-                        $f = 3 / ($x - 25);
-                    }
-
-                    // Пропускаем итерацию, если результат NaN
-                    if (is_nan($f)) {
+                        $f = round(3 * $x * $x + 2, 2);
+                    } elseif ($x < 20 && $x > 10) {
+                        $f = round(5 * $x + 7, 2);
+                    } elseif($x >= 20 && $x !=22) {
+                        $f = round($x / (22 - $x), 2);
+                    }else{
+                        echo "<div class='block'>f(" . $x . ") = error </div>";
+                        $i++;
                         $x += $step;
                         continue;
                     }
 
-                    // Прерываем цикл, если аргумент больше или равен 30
+                    
+
                     if ($x >= 30) {
                         break;
                     }
+
+                    $max_value = max($max_value, $f);
+                    $min_value = min($min_value, $f);
+                    $sum += $f;
+                    $count++;
 
                     echo "<div class='block'>f(" . $x . ") = " . $f . "</div>";
                     $i++;
@@ -183,13 +201,22 @@
                 echo "Неверный тип верстки";
                 break;
         }
-?>
 
+        // Вычисляем среднее арифметическое
+        $average = round($sum/$count,2);
 
+        // Вывод статистики
+        echo "<div class='stats'>
+                <p>Максимальное значение: ".$max_value."</p>
+                <p>Минимальное значение: ".$min_value."</p>
+                <p>Сумма значений: ".$sum."</p>
+                <p>Среднее арифметическое: ".$average."</p>
+              </div>";
+    ?>
     </main>
 
     <footer>
-        <p>Тип верстки: <?php echo $type; ?></p>
+        <p>Тип верстки: <?php echo $type_name; ?></p>
     </footer>
 </body>
 </html>
